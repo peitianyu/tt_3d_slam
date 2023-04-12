@@ -2,6 +2,7 @@
 #include "common/tt_assert.h"
 #include "common/tt_sleep.h"
 #include "common/tt_crc.h"
+#include "common/tt_log.h"
 
 #include <unistd.h>
 #include <sys/mman.h>
@@ -12,7 +13,7 @@
 namespace platform
 {
 
-Writer::Writer(std::string topic, uint64_t max_size):rwlock_(topic), max_size_(max_size)
+Writer::Writer(std::string topic, uint64_t max_size):rwlock_(topic), max_size_(max_size + TRANSMIT_SIZE)
 {
     // 创建或打开共享内存对象
     shm_fd_ = shm_open((topic + "_shm").c_str(), O_CREAT | O_RDWR, 0666);
@@ -42,6 +43,10 @@ void Writer::Write(std::string data)
 {
     // 加写锁
     rwlock_.WriteLock();
+
+    if(data.size() > max_size_){
+        LOG_ERROR("data size is too large, data size: ", data.size(), " max size: ", max_size_) << std::endl;
+    }
 
     // 写数据 size + data
     size_t size = data.size() + sizeof(uint16_t);

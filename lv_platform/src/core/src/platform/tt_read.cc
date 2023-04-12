@@ -2,6 +2,7 @@
 #include"common/tt_assert.h"
 #include"common/tt_sleep.h"
 #include"common/tt_crc.h"
+#include"common/tt_log.h"
 
 #include <unistd.h>
 #include <sys/mman.h>
@@ -12,7 +13,8 @@
 namespace platform
 {
 
-Reader::Reader(std::string topic, size_t max_size):rwlock_(topic), max_size_(max_size)
+
+Reader::Reader(std::string topic, size_t max_size):rwlock_(topic), max_size_(max_size + TRANSMIT_SIZE)
 {
     // 创建或打开共享内存对象
     shm_fd_ = shm_open((topic + "_shm").c_str(), O_CREAT | O_RDWR, 0666);
@@ -46,6 +48,10 @@ void Reader::Read(std::string &data)
     // 读数据 size + data
     size_t size;
     memcpy(&size, shm_ptr_, sizeof(size_t));
+
+    if(size + CRC16_SIZE > max_size_){
+        LOG_ERROR("data size is too large, data size: ", size + CRC16_SIZE, " max size: ", max_size_) << std::endl;
+    }
 
     size_t data_size = size - sizeof(uint16_t);
     data.resize(data_size);

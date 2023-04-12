@@ -4,40 +4,38 @@
 // publish.cc
 
 
-void Test()
+TEST(Platform, Serialize)
 {
-    Point point(1, 2, 3, 4);
     std::string topic = "/test";
     platform::Platform::getInstance().CreatePublisher(topic, sizeof(Point));
 
+    Point point(1, 2, 3, 4);
     platform::Serialize serialize;
     serialize << point;
 
     platform::Platform::getInstance().Publish(topic, serialize.str());
 
     LOG_DEBUG("Publish: ", point) << std::endl;
-
-    common::RateSleep(2.0);
 }
 
 
 // subscribe.cc
 
+#define DESERIALIZE(data, ...)               \
+    platform::Deserialize deserialize(data); \
+    deserialize >> __VA_ARGS__;
+
 void Callback(const std::string &data)
 {
-    platform::Deserialize deserialize(data);
     Point point;
-    deserialize >> point;
-    
-    LOG_INFO("Subscribe: ", point) << std::endl;
-    LOG_WARN("Subscribe: ", point) << std::endl;
+    DESERIALIZE(data, point);
+  
     LOG_DEBUG("Subscribe: ", point) << std::endl;
-    LOG_ERROR("Subscribe: ", point) << std::endl;
 
     ASSERT_EQ(point.x, 1);
     ASSERT_EQ(point.y, 2);
     ASSERT_EQ(point.z, 3);
-    ASSERT_EQ(point.intensity, 2); // fail
+    ASSERT_EQ(point.intensity, 4);
 }
 
 TEST(Platform, Deserialize)
@@ -48,8 +46,9 @@ TEST(Platform, Deserialize)
     // platform::Platform::getInstance().Spin();
     platform::Platform::getInstance().SpinOnce();
 }
+orm::Platform::getInstance().SpinOnce();
+}
 ```
-
 
 * 编译测试文件
 

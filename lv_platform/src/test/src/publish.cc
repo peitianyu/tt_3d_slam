@@ -17,7 +17,47 @@ TEST(Platform, Serialize)
 
     platform::Platform::getInstance().Publish(topic, serialize.str());
 
-    LOG_DEBUG("Publish: ", point) << std::endl;
+    // LOG_DEBUG("Publish: ", point) << std::endl;
+}
+
+TEST(Platform, Serialize1)
+{
+    std::string topic = "/test1";
+    platform::Platform::getInstance().CreatePublisher(topic, sizeof(Point)*4);
+
+    std::vector<Point> points;
+    points.push_back(Point(1, 2, 3, 4));
+    points.push_back(Point(2, 3, 4, 5));
+    points.push_back(Point(3, 4, 5, 6));
+    points.push_back(Point(4, 5, 6, 7));
+
+    platform::Serialize serialize;
+    serialize << points;
+
+    platform::Platform::getInstance().Publish(topic, serialize.str());
+
+    // for(auto &point : points)
+    //     LOG_DEBUG("Publish: ", point) << std::endl;
+}
+
+TEST(Platform, Serialize2)
+{
+    std::string topic = "/test2";
+    platform::Platform::getInstance().CreatePublisher(topic, sizeof(Point)*4);
+
+    std::vector<Point> points;
+    points.push_back(Point(1, 2, 3, 4));
+    points.push_back(Point(2, 3, 4, 5));
+    points.push_back(Point(3, 4, 5, 6));
+    points.push_back(Point(4, 5, 6, 7));
+
+    platform::Serialize serialize;
+    serialize << points;
+
+    platform::Platform::getInstance().Publish(topic, serialize.str());
+
+    // for(auto &point : points)
+    //     LOG_DEBUG("Publish: ", point) << std::endl;
 }
 
 int main()
