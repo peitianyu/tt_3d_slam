@@ -74,6 +74,7 @@ public:
 
 
 #define ASSERT_TRUE(c) Tester(__FILE__, __LINE__).Is((c), #c)
+#define ASSERT_FALSE(c) Tester(__FILE__, __LINE__).Is(!(c), #c)
 #define ASSERT_EQ(a,b) Tester(__FILE__, __LINE__).IsEq((a),(b))
 #define ASSERT_NE(a,b) Tester(__FILE__, __LINE__).IsNe((a),(b))
 #define ASSERT_GE(a,b) Tester(__FILE__, __LINE__).IsGe((a),(b))

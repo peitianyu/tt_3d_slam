@@ -18,7 +18,7 @@ float TicToc::Toc()
 {
     struct timeval now;
     gettimeofday(&now, NULL);
-    return (now.tv_sec - last_time_.tv_sec) + (now.tv_usec - last_time_.tv_usec) / 1000000.0;
+    return (now.tv_sec - last_time_.tv_sec) + float(now.tv_usec - last_time_.tv_usec) / 1e6;
 }
 
 

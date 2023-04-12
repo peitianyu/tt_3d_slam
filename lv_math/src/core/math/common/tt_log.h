@@ -16,8 +16,14 @@ std::ostream &STD_COUT(std::ostream &os, const T &firstArg, const Types &...args
     return STD_COUT(os, args...);
 }
 
-#define LOG_INFO(...) STD_COUT(std::cout, __VA_ARGS__)
+#define DEBUG
+#ifdef DEBUG
 #define LOG_DEBUG(...) STD_COUT(std::cout, "\033[33m[", __FUNCTION__, __LINE__, "] : ", __VA_ARGS__, "\033[0m")
+#else
+#define LOG_DEBUG(...) std::cout
+#endif
+
+#define LOG_INFO(...) STD_COUT(std::cout, __VA_ARGS__)
 #define LOG_WARN(...) STD_COUT(std::cout, "\033[35m[", __FUNCTION__, __LINE__, "] : ", __VA_ARGS__, "\033[0m")
 #define LOG_ERROR(...) STD_COUT(std::cout, "\033[31m[", __FUNCTION__, __LINE__, "] : ", __VA_ARGS__, "\033[0m")
 

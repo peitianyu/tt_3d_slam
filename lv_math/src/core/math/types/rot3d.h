@@ -19,16 +19,11 @@ public:
                                                 * Eigen::AngleAxisd(y, Eigen::Vector3d::UnitY())
                                                 * Eigen::AngleAxisd(z, Eigen::Vector3d::UnitZ())) { m_q.normalize(); }
 
-    double Norm() const { return ToEuler().norm(); }
-
-    Rot3D Inverted() const { return Rot3D(m_q.conjugate()); }
-
     Eigen::Vector3d ToEuler() const {return m_q.toRotationMatrix().eulerAngles(0, 1, 2);}
 
     Eigen::Quaterniond ToQuaternion() const { return m_q; }
 
     Eigen::Matrix3d ToMatrix() const { return m_q.toRotationMatrix(); }
-
 private:
     Eigen::Quaterniond m_q;
 };

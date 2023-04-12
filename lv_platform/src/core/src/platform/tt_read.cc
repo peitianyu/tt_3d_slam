@@ -49,9 +49,7 @@ void Reader::Read(std::string &data)
     size_t size;
     memcpy(&size, shm_ptr_, sizeof(size_t));
 
-    if(size + CRC16_SIZE > max_size_){
-        LOG_ERROR("data size is too large, data size: ", size + CRC16_SIZE, " max size: ", max_size_) << std::endl;
-    }
+    tt_assert(size + sizeof(size_t) <= max_size_);
 
     size_t data_size = size - sizeof(uint16_t);
     data.resize(data_size);

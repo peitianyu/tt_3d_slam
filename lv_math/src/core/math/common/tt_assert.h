@@ -1,11 +1,11 @@
 #ifndef __COMMON_ASSERT_H__
 #define __COMMON_ASSERT_H__
 
-
+#include "tt_log.h"
 
 #define tt_assert(expr)                                                                         \
     if (!(expr)) {                                                                              \
-        printf("Assert failed: %s, %s, %s, %d\n", #expr, __FILE__, __FUNCTION__, __LINE__);     \
+        LOG_ERROR("assert failed: ", #expr, __FILE__, __FUNCTION__, __LINE__) << std::endl;     \
         exit(1);                                                                                \
     }
 

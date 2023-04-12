@@ -5,7 +5,10 @@ namespace platform
 {
 
 
-Timer::Timer(float period) : period_(period) {}
+Timer::Timer(float period) : period_(period)
+{
+    Reset();
+}
 
 void Timer::Reset()
 {
@@ -16,7 +19,7 @@ bool Timer::IsTimeOut()
 {
     struct timeval now;
     gettimeofday(&now, NULL);
-    if (now.tv_sec - last_time_.tv_sec >= period_)
+    if ((now.tv_sec - last_time_.tv_sec) + float(now.tv_usec - last_time_.tv_usec) / 1e6 >= period_)
     {
         last_time_ = now;
         return true;

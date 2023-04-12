@@ -26,11 +26,19 @@ public:
     {}
 
     Pose3D(const Eigen::Matrix<double, 6, 1> &pose)
-        : Pose3D(pose.head(3), common::SO3Exp(pose.tail(3)))
+        : Pose3D(pose.head<3>(), Rot3D(pose(3), pose(4), pose(5)))
     {}
 
     Pose3D() : Pose3D(Point3D::Zero(), Rot3D())
     {}
+
+    Eigen::Matrix<double, 4, 4> ToMatrix() const
+    {
+        Eigen::Matrix<double, 4, 4> mat = Eigen::Matrix<double, 4, 4>::Identity();
+        mat.block<3, 3>(0, 0) = m_rot.ToMatrix();
+        mat.block<3, 1>(0, 3) = m_point;
+        return mat;
+    }
 
     Point3D Point() const { return m_point; }
     Rot3D Rot() const { return m_rot; }

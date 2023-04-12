@@ -2,7 +2,6 @@
 #include "common/tt_assert.h"
 #include "common/tt_sleep.h"
 #include "common/tt_crc.h"
-#include "common/tt_log.h"
 
 #include <unistd.h>
 #include <sys/mman.h>
@@ -44,9 +43,7 @@ void Writer::Write(std::string data)
     // 加写锁
     rwlock_.WriteLock();
 
-    if(data.size() > max_size_){
-        LOG_ERROR("data size is too large, data size: ", data.size(), " max size: ", max_size_) << std::endl;
-    }
+    tt_assert(data.size() <= max_size_);
 
     // 写数据 size + data
     size_t size = data.size() + sizeof(uint16_t);

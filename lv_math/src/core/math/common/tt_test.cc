@@ -44,7 +44,7 @@ int RunAllTests()
 		name.push_back('.');
 		name.append(t.name);
 
-		fprintf(stderr, "==== Test %s.%s\n", t.base, t.name);
+		fprintf(stderr, "[ TEST ] [ %s.%s ]\n", t.base, t.name);
 		(*t.func)();
 		++num;
 	}
