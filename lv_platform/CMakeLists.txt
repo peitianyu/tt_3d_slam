@@ -8,6 +8,8 @@ find_package(Eigen3 REQUIRED)
 include_directories(${EIGEN3_INCLUDE_DIR})
 link_directories(${EIGEN3_LIBRARY_DIRS})
 
+set(LV_MATH_INSTALL_DIR ${PROJECT_SOURCE_DIR}/../lv_math/install)
+
 # 编译
 if(COMPILE_MODE MATCHES "TEST")
     add_subdirectory(src/test)
