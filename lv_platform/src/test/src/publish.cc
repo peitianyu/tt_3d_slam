@@ -3,28 +3,25 @@
 #include "platform/tt_serialize.h"
 #include "common/tt_log.h"
 #include "common/tt_sleep.h"
+#include "common/tt_test.h"
 #include "point.h"
 
-
-
-void Test()
+TEST(Platform, Serialize)
 {
-    Point point(1, 2, 3, 4);
     std::string topic = "/test";
     platform::Platform::getInstance().CreatePublisher(topic, sizeof(Point));
 
+    Point point(1, 2, 3, 4);
     platform::Serialize serialize;
     serialize << point;
 
     platform::Platform::getInstance().Publish(topic, serialize.str());
 
     LOG_DEBUG("Publish: ", point) << std::endl;
-
-    common::RateSleep(2.0);
 }
 
 int main()
 {
-    Test();
+    RunAllTests();
     return 0;
 }

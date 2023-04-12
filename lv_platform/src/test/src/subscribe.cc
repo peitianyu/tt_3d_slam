@@ -5,21 +5,21 @@
 #include "common/tt_log.h"
 #include "point.h"
 
+#define DESERIALIZE(data, ...)               \
+    platform::Deserialize deserialize(data); \
+    deserialize >> __VA_ARGS__;
+
 void Callback(const std::string &data)
 {
-    platform::Deserialize deserialize(data);
     Point point;
-    deserialize >> point;
+    DESERIALIZE(data, point);
     
-    LOG_INFO("Subscribe: ", point) << std::endl;
-    LOG_WARN("Subscribe: ", point) << std::endl;
     LOG_DEBUG("Subscribe: ", point) << std::endl;
-    LOG_ERROR("Subscribe: ", point) << std::endl;
 
     ASSERT_EQ(point.x, 1);
     ASSERT_EQ(point.y, 2);
     ASSERT_EQ(point.z, 3);
-    ASSERT_EQ(point.intensity, 2); // fail
+    ASSERT_EQ(point.intensity, 4);
 }
 
 TEST(Platform, Deserialize)
