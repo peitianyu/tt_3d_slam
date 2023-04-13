@@ -22,5 +22,13 @@ void Subscriber::Subscribe()
     }
 }
 
+void Subscriber::SubscribeOnce()
+{
+    std::string data;
+    reader_->Read(data);
+    callback_(data);
+    timer_->Reset();
+}
+
 } // namespace platform
 

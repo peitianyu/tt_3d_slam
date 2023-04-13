@@ -21,6 +21,8 @@ public:
         float period = -1.0);
 
     void Subscribe();
+
+    void SubscribeOnce();
 private:
     std::unique_ptr<Reader> reader_;
     std::unique_ptr<Timer> timer_;

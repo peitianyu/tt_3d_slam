@@ -29,14 +29,16 @@ void Platform::Publish(std::string topic, const std::string &data)
 
 void Platform::Spin()
 {
-    while (true)
-        SpinOnce();
+    while (true){
+        for (auto &it : m_subscribers)
+            static_cast<Subscriber *>(it.second.get())->Subscribe();
+    }
 }
 
 void Platform::SpinOnce()
 {
     for (auto &it : m_subscribers)
-        static_cast<Subscriber *>(it.second.get())->Subscribe();
+        static_cast<Subscriber *>(it.second.get())->SubscribeOnce();
 }
 
 } // namespace platform
