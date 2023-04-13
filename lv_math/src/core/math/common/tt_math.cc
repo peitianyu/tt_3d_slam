@@ -17,6 +17,17 @@ Eigen::Matrix3d SO3Exp(const Eigen::Vector3d& w)
    return R;
 }
 
+Eigen::Matrix4d DeltaX2T(const Eigen::Matrix<double, 6, 1>& delta_x)
+{
+   Eigen::Matrix4d T = Eigen::Matrix4d::Identity();
+   Eigen::Vector3d delta_p = delta_x.head(3);
+   Eigen::Vector3d delta_theta = delta_x.tail(3);
+   Eigen::Matrix3d delta_R = SO3Exp(delta_theta);
+   T.block(0, 0, 3, 3) = delta_R;
+   T.block(0, 3, 3, 1) = delta_p;
+   return T;
+}
+
 Eigen::Vector3d NormalizeEuler(const Eigen::Vector3d &v)
 {
    Eigen::Vector3d v_norm = v;

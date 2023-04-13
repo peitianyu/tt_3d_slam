@@ -20,6 +20,8 @@ Eigen::Matrix3d Hat(const Eigen::Vector3d& v);
 
 Eigen::Matrix3d SO3Exp(const Eigen::Vector3d& w);
 
+Eigen::Matrix4d DeltaX2T(const Eigen::Matrix<double, 6, 1>& delta_x);
+
 Eigen::Vector3d NormalizeEuler(const Eigen::Vector3d &v);
 
 Eigen::Matrix3d EulerAnglesToMatrix(const Eigen::Vector3d &angles);
