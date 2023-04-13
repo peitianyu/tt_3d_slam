@@ -25,6 +25,10 @@ public:
         : m_point(point), m_rot(rot)
     {}
 
+    Pose3D(const Eigen::Matrix<double, 4, 4>& mat)
+        : Pose3D(mat.block<3, 1>(0, 3), Rot3D(mat.block<3, 3>(0, 0)))
+    {}
+
     Pose3D(const Eigen::Matrix<double, 6, 1> &pose)
         : Pose3D(pose.head<3>(), Rot3D(pose(3), pose(4), pose(5)))
     {}

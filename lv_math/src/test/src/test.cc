@@ -95,6 +95,9 @@ TEST(types, pose)
     types::Pose3D pose2(Eigen::Vector3d(1, 2, 3), rot);
     LOG_DEBUG("construct from matrix: ", pose2) << std::endl;
 
+    types::Pose3D pose5(pose.ToMatrix());
+    LOG_DEBUG("construct from matrix: ", pose5) << std::endl;
+
     LOG_DEBUG("to_matrx: \n", pose.ToMatrix()) << std::endl;
 
     types::Pose3D d_pose(Eigen::Vector3d(1, 2, 3), Eigen::Quaterniond(1, 2, 3, 4));
