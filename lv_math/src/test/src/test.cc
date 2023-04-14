@@ -109,15 +109,12 @@ TEST(types, pose)
     LOG_DEBUG("transform: ", pose4) << std::endl;
 }
 
-using namespace grid_map;
-using namespace types;
-
 std::vector<types::Point3D> BuildRandomPoints()
 {
     std::vector<types::Point3D> points;
     for(int i = 0; i < 100; ++i)
     {
-        Point3D point;
+        types::Point3D point;
         point.x() = double(rand() % 1000)/100.0;
         point.y() = double(rand() % 1000)/100.0;
         point.z() = double(rand() % 1000)/100.0;
@@ -131,8 +128,8 @@ std::vector<types::Point3D> BuildRandomPoints()
 TEST(grid_map, grid_map_base)
 {
     grid_map::GridMapBase grid_map;
-    std::vector<Point3D> points = BuildRandomPoints();
-    Pose3D cur_pose = Pose3D();
+    std::vector<types::Point3D> points = BuildRandomPoints();
+    types::Pose3D cur_pose = types::Pose3D();
     grid_map.UpdateByScan(cur_pose, points);
     LOG_DEBUG("--------grid_map.GetData().size(): ", grid_map.GetData().size()) << std::endl;
 
@@ -146,14 +143,12 @@ TEST(grid_map, grid_map_base)
 
     LOG_DEBUG("--------grid_map.GetCellProb()") << std::endl;
     LOG_DEBUG(grid_map.GetCellProb(grid_map::Index3D(Eigen::Vector3i(10,10,10)))) << std::endl;
-    LOG_DEBUG(grid_map.GetCellProb(grid_map::Index3D(Point3D(6.01, 0.97, 9.02)))) << std::endl;
+    LOG_DEBUG(grid_map.GetCellProb(grid_map::Index3D(types::Point3D(6.01, 0.97, 9.02)))) << std::endl;
 
     LOG_DEBUG("--------grid_map.Clear()") << std::endl;
     grid_map.Clear();
     LOG_DEBUG("grid_map.GetData().size(): ", grid_map.GetData().size()) << std::endl;
 }
-
-
 
 int main()
 {
