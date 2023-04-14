@@ -10,6 +10,8 @@
 #include"types/point3d.h"
 #include"types/rot3d.h"
 
+#include"grid_map/grid_map_base.h"
+
 #include"test_singleton.h"
 
 TEST(common, log)
@@ -106,6 +108,52 @@ TEST(types, pose)
     types::Pose3D pose4 = pose3.TransformAdd(d_pose.TransformFrom(types::Pose3D()));
     LOG_DEBUG("transform: ", pose4) << std::endl;
 }
+
+using namespace grid_map;
+using namespace types;
+
+std::vector<types::Point3D> BuildRandomPoints()
+{
+    std::vector<types::Point3D> points;
+    for(int i = 0; i < 100; ++i)
+    {
+        Point3D point;
+        point.x() = double(rand() % 1000)/100.0;
+        point.y() = double(rand() % 1000)/100.0;
+        point.z() = double(rand() % 1000)/100.0;
+        // point.transpose() << std::endl;
+        points.push_back(point);
+    }
+
+    return points;
+}
+
+TEST(grid_map, grid_map_base)
+{
+    grid_map::GridMapBase grid_map;
+    std::vector<Point3D> points = BuildRandomPoints();
+    Pose3D cur_pose = Pose3D();
+    grid_map.UpdateByScan(cur_pose, points);
+    LOG_DEBUG("--------grid_map.GetData().size(): ", grid_map.GetData().size()) << std::endl;
+
+    LOG_DEBUG("--------grid_map.GetMapLimit()")<< std::endl;
+    for(auto limit : grid_map.GetMapLimit())
+        LOG_DEBUG(limit.index.transpose()) << std::endl;
+
+    LOG_DEBUG("--------grid_map.IsValid()") << std::endl;
+    LOG_DEBUG(grid_map.IsValid(grid_map::Index3D(Eigen::Vector3i(10,10,10)))) << std::endl;
+    LOG_DEBUG(grid_map.IsValid(grid_map::Index3D(Eigen::Vector3i(1000,1000,1000)))) << std::endl;
+
+    LOG_DEBUG("--------grid_map.GetCellProb()") << std::endl;
+    LOG_DEBUG(grid_map.GetCellProb(grid_map::Index3D(Eigen::Vector3i(10,10,10)))) << std::endl;
+    LOG_DEBUG(grid_map.GetCellProb(grid_map::Index3D(Point3D(6.01, 0.97, 9.02)))) << std::endl;
+
+    LOG_DEBUG("--------grid_map.Clear()") << std::endl;
+    grid_map.Clear();
+    LOG_DEBUG("grid_map.GetData().size(): ", grid_map.GetData().size()) << std::endl;
+}
+
+
 
 int main()
 {
