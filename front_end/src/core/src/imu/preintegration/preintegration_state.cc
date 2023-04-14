@@ -3,10 +3,10 @@
 namespace front_end{
 namespace imu{
 
-PreintegrationState::PreintegrationState(lv_math::types::Time dt, Eigen::Vector3d p, Eigen::Vector3d v, Eigen::Vector3d r)
+PreintegrationState::PreintegrationState(types::Time dt, Eigen::Vector3d p, Eigen::Vector3d v, Eigen::Vector3d r)
     : sum_dt(dt), pos(p), vel(v), rot(Eigen::AngleAxisd(r.norm(), r.normalized())) {}
 
-PreintegrationState::PreintegrationState(lv_math::types::Time dt, Eigen::Matrix<double, 9, 1> state)
+PreintegrationState::PreintegrationState(types::Time dt, Eigen::Matrix<double, 9, 1> state)
 {
     sum_dt = dt;
     pos = state.head<3>(0);

@@ -45,11 +45,11 @@ using PointCloudPCD = PointCloud<CloudPointType>;
 
 struct TimedPointCloudPCD
 {
-    lv_math::types::Time time_stamp;
-    lv_math::types::Time scan_time;
+    types::Time time_stamp;
+    types::Time scan_time;
     PointCloudPCD point_cloud;
 
-    TimedPointCloudPCD(const lv_math::types::Time& t = lv_math::types::Time(), const lv_math::types::Time& s = lv_math::types::Time(), const PointCloudPCD& p = PointCloudPCD())
+    TimedPointCloudPCD(const types::Time& t = types::Time(), const types::Time& s = types::Time(), const PointCloudPCD& p = PointCloudPCD())
         : time_stamp(t), scan_time(s), point_cloud(p) {}
 };
 

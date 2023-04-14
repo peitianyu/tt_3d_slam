@@ -9,7 +9,7 @@ namespace front_end{
 namespace point_cloud{
 namespace filter{
 
-void VoxelFilter(std::vector<lv_math::types::Point3D>& point_cloud, const double& resolution, const double& range_max = 100.0);
+void VoxelFilter(std::vector<types::Point3D>& point_cloud, const double& resolution, const double& range_max = 100.0);
 
 } // namespace filter
 } // namespace point_cloud

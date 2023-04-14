@@ -3,7 +3,7 @@
 namespace front_end{
 namespace gnss{
 
-lv_math::types::Pose3D GnssParam::GetAntennaPose() const { return lv_math::types::Pose3D(Eigen::Vector3d(antenna_offset(0), antenna_offset(1), 0), lv_math::types::Rot3D(0, 0, antenna_offset(2))); }
+types::Pose3D GnssParam::GetAntennaPose() const { return types::Pose3D(Eigen::Vector3d(antenna_offset(0), antenna_offset(1), 0), types::Rot3D(0, 0, antenna_offset(2))); }
 
 Eigen::Matrix3d GnssParam::GetTransCov() const
 {

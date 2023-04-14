@@ -6,10 +6,10 @@
 #include<memory>
 #include<iostream>
 
-#include "common/math.h"
+#include "common/tt_math.h"
 #include "scan_context_kdtree.h"
 #include "../loop_closure_base.h"
-#include "viz/visual.h"
+#include "viz/tt_visual.h"
 #include "3dr_party/nanoflann.hpp"
 
 namespace front_end {
@@ -36,14 +36,14 @@ public:
 
     ScanContext(const Param& param = Param());
 
-    virtual bool Match(const std::vector<lv_math::types::Point3D>& points, const lv_math::types::Pose3D& pose) override;
+    virtual bool Match(const std::vector<types::Point3D>& points, const types::Pose3D& pose) override;
 
 private:
     void ResetResult();
 
-    Eigen::MatrixXd MakeDescriptor(const std::vector<lv_math::types::Point3D>& points);
+    Eigen::MatrixXd MakeDescriptor(const std::vector<types::Point3D>& points);
 
-    void AddLoopFrame(const lv_math::types::Pose3D &pose, const Eigen::MatrixXd &curr_descriptor);
+    void AddLoopFrame(const types::Pose3D &pose, const Eigen::MatrixXd &curr_descriptor);
 
     bool FindNearestNeighbor(const Eigen::MatrixXd& descriptor, ScanContextFrame& loop_frame);
 

@@ -13,10 +13,10 @@ namespace loop_closure {
 struct ScanContextFrame
 {
     int id;
-    lv_math::types::Pose3D pose;
+    types::Pose3D pose;
     Eigen::MatrixXd descriptor;
 
-    ScanContextFrame(int i, const lv_math::types::Pose3D& p, const Eigen::MatrixXd& d)
+    ScanContextFrame(int i, const types::Pose3D& p, const Eigen::MatrixXd& d)
         : id(i), pose(p), descriptor(d) {}
     
     ScanContextFrame() {}

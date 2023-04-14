@@ -9,19 +9,19 @@ namespace point_cloud{
 struct CloudPointType
 {
     uint index;
-    lv_math::types::TimedPoint3D timed_point;
+    types::TimedPoint3D timed_point;
 
     double Range() const
     {
         return timed_point.point.norm();
     }
 
-    CloudPointType(uint i, const lv_math::types::TimedPoint3D& p)
+    CloudPointType(uint i, const types::TimedPoint3D& p)
         : index(i), timed_point(p)
     {}
 
     CloudPointType()
-        : CloudPointType(0, lv_math::types::TimedPoint3D())
+        : CloudPointType(0, types::TimedPoint3D())
     {}
 };
 

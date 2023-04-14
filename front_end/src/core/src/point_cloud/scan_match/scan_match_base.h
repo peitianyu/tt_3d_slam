@@ -5,7 +5,7 @@
 #include <vector>
 #include "types/pose3d.h"
 
-using namespace lv_math::types;
+using namespace types;
 
 namespace front_end{
 namespace point_cloud{

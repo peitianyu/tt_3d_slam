@@ -40,20 +40,20 @@ bool ScanCalibrate::CheckTimestamp(const front_end::point_cloud::TimedPointCloud
     return true;
 }
 
-void ScanCalibrate::EraseInvalidImu(lv_math::types::Time point_cloud_start_time)
+void ScanCalibrate::EraseInvalidImu(types::Time point_cloud_start_time)
 {
     while (m_imu_que.front().time_stamp < point_cloud_start_time)
         m_imu_que.erase(m_imu_que.begin());
 }
 
-void ScanCalibrate::IntegrateImu(lv_math::types::Time point_cloud_end_time)
+void ScanCalibrate::IntegrateImu(types::Time point_cloud_end_time)
 {
     m_calibrate_rot.clear();
     m_calibrate_rot.push_back(std::make_pair(m_imu_que.front().time_stamp, Eigen::Vector3d::Zero()));
 
     for(uint i = 1; m_imu_que[i-1].time_stamp < point_cloud_end_time; i++)
     {
-        lv_math::types::Time d_t = m_imu_que[i].time_stamp - m_imu_que[i - 1].time_stamp;
+        types::Time d_t = m_imu_que[i].time_stamp - m_imu_que[i - 1].time_stamp;
         Eigen::Vector3d d_rot = m_imu_que[i - 1].gyr * d_t;
         m_calibrate_rot.push_back(std::make_pair(m_imu_que[i].time_stamp, m_calibrate_rot.back().second + d_rot));
     }
@@ -70,16 +70,16 @@ void ScanCalibrate::Correct(const front_end::point_cloud::TimedPointCloudPCD& ti
         uint line_num = iter.first;
         for(const auto& p: iter.second)
         {
-            lv_math::types::Rot3D rot = GetInterpolatedRot(p.timed_point.time_stamp);
-            lv_math::types::Point3D point = rot.ToQuaternion().conjugate() * p.timed_point.point;
+            types::Rot3D rot = GetInterpolatedRot(p.timed_point.time_stamp);
+            types::Point3D point = rot.ToQuaternion().conjugate() * p.timed_point.point;
 
-            CloudPointType cloud_point_type(p.index, lv_math::types::TimedPoint3D(p.timed_point.time_stamp, point));
+            CloudPointType cloud_point_type(p.index, types::TimedPoint3D(p.timed_point.time_stamp, point));
             m_corrected_point_cloud.point_cloud.AddPoint(line_num, cloud_point_type);
         }
     }
 }
 
-lv_math::types::Rot3D ScanCalibrate::GetInterpolatedRot(lv_math::types::Time time_stamp)
+types::Rot3D ScanCalibrate::GetInterpolatedRot(types::Time time_stamp)
 {
     for(uint i = 1; i < m_calibrate_rot.size(); i++)
     {
@@ -92,10 +92,10 @@ lv_math::types::Rot3D ScanCalibrate::GetInterpolatedRot(lv_math::types::Time tim
             double back_ratio = (time_stamp - m_calibrate_rot[i - 1].first) / (m_calibrate_rot[i].first - m_calibrate_rot[i - 1].first);
 
             Eigen::Vector3d rot = front_rot * front_ratio + back_rot * back_ratio;
-            return lv_math::types::Rot3D(rot(0), rot(1), rot(2));
+            return types::Rot3D(rot(0), rot(1), rot(2));
         }
     }
-    return lv_math::types::Rot3D();
+    return types::Rot3D();
 }
 
 } // namespace point_cloud

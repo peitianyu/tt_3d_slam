@@ -80,7 +80,7 @@ namespace point_cloud{
                 Eigen::Vector3d error = world_ps[i] - nearest_p;
                 Eigen::Matrix<double, 3, 6> jacobian = Eigen::Matrix<double, 3, 6>::Zero();
                 jacobian.block<3, 3>(0, 0) = Eigen::Matrix3d::Identity();
-                jacobian.block<3, 3>(0, 3) = -d_R * lv_math::common::Hat(cur_ps[i]);
+                jacobian.block<3, 3>(0, 3) = -d_R * common::Hat(cur_ps[i]);
 
                 H += jacobian.transpose() * jacobian;
                 b += jacobian.transpose() * error;

@@ -14,10 +14,14 @@ link_directories(${PCL_LIBRARY_DIRS})
 
 # 安装lv_math头文件, !注意修改此文件路径
 set(LV_MATH_INSTALL_DIR ${PROJECT_SOURCE_DIR}/../lv_math/install)
+set(LV_PLATFORM_INSTALL_DIR ${PROJECT_SOURCE_DIR}/../lv_platform/install)
+set(LV_VIZ_INSTALL_DIR ${PROJECT_SOURCE_DIR}/../viz/install)
 
 message(STATUS "lv_math install dir: ${LV_MATH_INSTALL_DIR}")
 
 include_directories(${LV_MATH_INSTALL_DIR}/include/math)
+include_directories(${LV_PLATFORM_INSTALL_DIR}/include)
+include_directories(${LV_VIZ_INSTALL_DIR}/include)
 
 # 编译
 if(COMPILE_MODE MATCHES "TEST")

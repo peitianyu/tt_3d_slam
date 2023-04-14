@@ -6,7 +6,7 @@
 #include "../types/point_cloud.h"
 #include "imu/types/imu.h" 
 #include "types/rot3d.h"
-#include "common/log.h"
+#include "common/tt_log.h"
 
 
 namespace front_end{
@@ -25,16 +25,16 @@ public:
 private:
     bool CheckTimestamp(const front_end::point_cloud::TimedPointCloudPCD& timed_point_cloud);
 
-    void EraseInvalidImu(lv_math::types::Time point_cloud_start_time);
+    void EraseInvalidImu(types::Time point_cloud_start_time);
 
-    void IntegrateImu(lv_math::types::Time point_cloud_end_time);
+    void IntegrateImu(types::Time point_cloud_end_time);
 
     void Correct(const front_end::point_cloud::TimedPointCloudPCD& timed_point_cloud);
 
-    lv_math::types::Rot3D GetInterpolatedRot(lv_math::types::Time time_stamp);
+    types::Rot3D GetInterpolatedRot(types::Time time_stamp);
 private:
     std::vector<front_end::imu::Imu> m_imu_que;
-    std::vector<std::pair<lv_math::types::Time, Eigen::Vector3d>> m_calibrate_rot;
+    std::vector<std::pair<types::Time, Eigen::Vector3d>> m_calibrate_rot;
     front_end::point_cloud::TimedPointCloudPCD m_corrected_point_cloud;
 };
 

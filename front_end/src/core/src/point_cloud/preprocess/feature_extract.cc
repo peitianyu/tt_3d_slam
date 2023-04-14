@@ -1,6 +1,6 @@
 #include "feature_extract.h"
 #include "../filter/voxel_filter.h"
-#include "viz/visual.h"
+#include "viz/tt_visual.h"
 
 namespace front_end{
 namespace point_cloud{
@@ -19,12 +19,10 @@ void FeatureExtract::Extract(const front_end::point_cloud::TimedPointCloudPCD& t
 
     MarkOccludedParallelPoints();
 
-    ExtractGroundPoints();
-
     ExtractCornerSurfacePoints();
 }
 
-const std::unordered_map<std::string, std::vector<lv_math::types::Point3D>>& FeatureExtract::GetFeature() const { return m_point_cloud; }
+const std::unordered_map<std::string, std::vector<types::Point3D>>& FeatureExtract::GetFeature() const { return m_point_cloud; }
 
 bool FeatureExtract::PreprocessPointCloud(const front_end::point_cloud::PointCloudPCD& point_cloud)
 {
@@ -102,15 +100,6 @@ void FeatureExtract::MarkOccludedParallelPoints()
             if (diff1 > parallel_thr * depth1 && diff2 > parallel_thr * depth1)
                 m_cloud_smoothness[line_num][i].picked = true;
         }
-    }
-}
-
-void FeatureExtract::ExtractGroundPoints()
-{
-    for(uint i = 0; i < m_cloud_points.size() - 1; i++)
-    {
-        // 同一index的点   
-        
     }
 }
 

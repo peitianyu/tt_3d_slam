@@ -1,5 +1,6 @@
 #include"scan_context.h"
-#include "common/log.h"
+#include "common/tt_log.h"
+#include "common/tt_assert.h"
 
 namespace front_end {
 namespace loop_closure {
@@ -13,7 +14,7 @@ ScanContext::ScanContext(const Param& param) : LoopClosureBase(), m_param(param)
     m_frame_kd_tree = std::unique_ptr<ScanContextKdtree>(new ScanContextKdtree());
 }
 
-bool ScanContext::Match(const std::vector<lv_math::types::Point3D>& points, const lv_math::types::Pose3D& pose)
+bool ScanContext::Match(const std::vector<types::Point3D>& points, const types::Pose3D& pose)
 {
     Eigen::MatrixXd curr_descriptor = MakeDescriptor(points);
 
@@ -41,7 +42,7 @@ void ScanContext::ResetResult()
     m_result = LoopClosureResult();
 }
 
-Eigen::MatrixXd ScanContext::MakeDescriptor(const std::vector<lv_math::types::Point3D>& points)
+Eigen::MatrixXd ScanContext::MakeDescriptor(const std::vector<types::Point3D>& points)
 {
     Eigen::MatrixXd descriptor = Eigen::MatrixXd::Zero(RING_NUM, SECTOR_NUM);
 
@@ -62,7 +63,7 @@ Eigen::MatrixXd ScanContext::MakeDescriptor(const std::vector<lv_math::types::Po
     return descriptor;
 }
 
-void ScanContext::AddLoopFrame(const lv_math::types::Pose3D &pose, const Eigen::MatrixXd &curr_descriptor)
+void ScanContext::AddLoopFrame(const types::Pose3D &pose, const Eigen::MatrixXd &curr_descriptor)
 {
     m_frame_kd_tree->AddScanContextFrame(ScanContextFrame(m_frame_kd_tree->kdtree_get_point_count(), pose, curr_descriptor));
 }
@@ -95,7 +96,7 @@ bool ScanContext::FindNearestNeighbor(const Eigen::MatrixXd& descriptor, ScanCon
 
 bool ScanContext::CheckContactRatio(const Eigen::MatrixXd &loop_descriptor, const Eigen::MatrixXd &curr_descriptor)
 {
-    SLAM_ASSERT(loop_descriptor.rows() == RING_NUM && loop_descriptor.cols() == SECTOR_NUM);
+    tt_assert(loop_descriptor.rows() == RING_NUM && loop_descriptor.cols() == SECTOR_NUM);
     Eigen::MatrixXd aligned_descriptor = AlignasDescriptor(loop_descriptor, curr_descriptor);
 
     // std::cout<< loop_descriptor <<std::endl;

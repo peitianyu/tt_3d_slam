@@ -31,7 +31,7 @@ public:
 
     void Extract(const front_end::point_cloud::TimedPointCloudPCD& timed_point_cloud);
 
-    const std::unordered_map<std::string, std::vector<lv_math::types::Point3D>>& GetFeature() const;
+    const std::unordered_map<std::string, std::vector<types::Point3D>>& GetFeature() const;
 private:
     bool PreprocessPointCloud(const front_end::point_cloud::PointCloudPCD& point_cloud);
 
@@ -44,7 +44,7 @@ private:
     bool PickedCloudNeighbor(const uint& line_num, const uint& index);
 private:
     Param m_param;
-    std::unordered_map<std::string, std::vector<lv_math::types::Point3D>> m_point_cloud;
+    std::unordered_map<std::string, std::vector<types::Point3D>> m_point_cloud;
     std::unordered_map<uint, std::vector<CloudSmoothness>> m_cloud_smoothness; 
     std::map<uint, std::vector<CloudPointType>> m_cloud_points;
 };

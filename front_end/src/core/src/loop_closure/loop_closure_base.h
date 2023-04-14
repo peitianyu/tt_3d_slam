@@ -10,9 +10,9 @@ namespace loop_closure{
 struct LoopClosureResult
 {
     bool found;
-    lv_math::types::Pose3D loop_pose;
+    types::Pose3D loop_pose;
 
-    LoopClosureResult(bool f = false, lv_math::types::Pose3D d_p = lv_math::types::Pose3D())
+    LoopClosureResult(bool f = false, types::Pose3D d_p = types::Pose3D())
         : found(f), loop_pose(d_p) {}
 };
 
@@ -21,7 +21,7 @@ class LoopClosureBase
 public:
     LoopClosureBase() : m_result(LoopClosureResult()) {}
 
-    virtual bool Match(const std::vector<lv_math::types::Point3D>& points, const lv_math::types::Pose3D& pose) = 0;
+    virtual bool Match(const std::vector<types::Point3D>& points, const types::Pose3D& pose) = 0;
 
     const LoopClosureResult& GetResult() const {return m_result;}
 protected:

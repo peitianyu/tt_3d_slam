@@ -25,7 +25,7 @@ struct GnssParam
     Eigen::Vector3d antenna_offset; // (x, y, theta)(m, m, rad)
     GpsStatusType status;
     
-    lv_math::types::Pose3D GetAntennaPose() const;
+    types::Pose3D GetAntennaPose() const;
     Eigen::Matrix3d GetTransCov() const;
     Eigen::Matrix3d GetRotCov() const;
 
