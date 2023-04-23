@@ -1,1 +1,1 @@
-学习slam笔记
+"To learn, read; To know, write; To master, teach"

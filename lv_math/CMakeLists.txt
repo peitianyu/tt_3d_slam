@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.3)
 project(lv_math)
 SET(CMAKE_CXX_COMPILER "g++")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -DNDEBUG -Wall -std=c++14 -fPIC ")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -DNDEBUG -Wall -std=c++14 -fPIC -pthread")
 
 # 安装第三方库
 find_package(Eigen3 REQUIRED)

@@ -5,6 +5,8 @@
 #include"common/tt_ini_parse.h"
 #include"common/tt_tic_toc.h"
 #include"common/tt_sleep.h"
+#include"common/tt_thread_pool.h"
+#include"common/tt_backtrace.h"
 
 #include"types/pose3d.h"
 #include"types/point3d.h"
@@ -83,6 +85,35 @@ TEST(common, assert)
     tt_assert(1.2 == 1.2);
 }
 
+void CallBack(uint id, std::string str)
+{
+    LOG_DEBUG(str, id) << std::endl;
+}
+
+TEST(common, thread_pool)
+{
+    common::ThreadPool pool(4);
+    std::vector< std::future<int> > results;
+
+    for(int i = 0; i < 8; ++i) {
+        results.emplace_back(
+            pool.enqueue([i] {
+                LOG_DEBUG("hello ", i) << std::endl;
+                common::Sleep(1.0);
+                LOG_DEBUG("world ", i) << std::endl;
+                return i*i;
+            })
+        );
+    }
+
+    for(auto && result: results)
+        LOG_DEBUG(result.get()) << std::endl;
+    // std::cout << std::endl;
+}
+
+
+
+
 TEST(types, pose)
 {
     types::Pose3D pose(Eigen::Vector3d(1, 2, 3), Eigen::Quaterniond(1, 2, 3, 4));
@@ -148,6 +179,19 @@ TEST(grid_map, grid_map_base)
     LOG_DEBUG("--------grid_map.Clear()") << std::endl;
     grid_map.Clear();
     LOG_DEBUG("grid_map.GetData().size(): ", grid_map.GetData().size()) << std::endl;
+}
+
+void TestSegmentFault()
+{
+    int *p = NULL;
+    *p = 1;
+}
+
+TEST(common, backtrace)
+{
+    REGISTER_SEGFAULT_HANDLER
+
+    TestSegmentFault();
 }
 
 int main()
