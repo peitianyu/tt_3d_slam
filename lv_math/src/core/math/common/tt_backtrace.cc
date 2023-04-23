@@ -11,7 +11,7 @@ void PrintTrace(int sig)
     size = backtrace(array, 10);
     strings = backtrace_symbols(array, size);
 
-    LOG_ERROR("------------------*** Error: signal %d ***------------------", sig) << std::endl;
+    LOG_ERROR("------------------*** Error: signal", sig, "***------------------") << std::endl;
     for (i = 0; i < size; i++)
         LOG_ERROR("[", i, "] ", strings[i]) << std::endl;
 
