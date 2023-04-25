@@ -15,7 +15,6 @@ class LogFile
 {
 public:
     LogFile();
-
     ~LogFile();
 
     template <typename T>
@@ -32,9 +31,7 @@ public:
     }
 
     void Flush();
-
     std::string GetFileName();
-
     std::size_t GetFileSize();
 private:
     static uint m_log_file_num;
@@ -51,8 +48,7 @@ private:
 class LogFileManage
 {
 public:
-    static LogFileManage *GetInstance()
-    {
+    static LogFileManage *GetInstance(){
         static LogFileManage instance;
         return &instance;
     }

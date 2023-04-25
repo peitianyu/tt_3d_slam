@@ -7,6 +7,7 @@
 #include"common/tt_sleep.h"
 #include"common/tt_thread_pool.h"
 #include"common/tt_backtrace.h"
+#include"common/tt_crc.h"
 
 #include"types/pose3d.h"
 #include"types/point3d.h"
@@ -83,6 +84,14 @@ TEST(common, assert)
 {
     tt_assert(1 == 1);
     tt_assert(1.2 == 1.2);
+}
+
+TEST(common, crc)
+{
+    std::string str = "123456789";
+    uint16_t crc = common::crc16::Update((uint8_t*)str.c_str(), str.size());
+    LOG_DEBUG("crc: ", crc) << std::endl;
+    ASSERT_TRUE(common::crc16::CheckCRC((uint8_t*)str.c_str(), str.size(), crc));
 }
 
 void CallBack(uint id, std::string str)
