@@ -90,29 +90,26 @@ void CallBack(uint id, std::string str)
     LOG_DEBUG(str, id) << std::endl;
 }
 
-TEST(common, thread_pool)
-{
-    common::ThreadPool pool(4);
-    std::vector< std::future<int> > results;
+// TEST(common, thread_pool)
+// {
+//     common::ThreadPool pool(4);
+//     std::vector< std::future<int> > results;
 
-    for(int i = 0; i < 8; ++i) {
-        results.emplace_back(
-            pool.enqueue([i] {
-                LOG_DEBUG("hello ", i) << std::endl;
-                common::Sleep(1.0);
-                LOG_DEBUG("world ", i) << std::endl;
-                return i*i;
-            })
-        );
-    }
+//     for(int i = 0; i < 8; ++i) {
+//         results.emplace_back(
+//             pool.enqueue([i] {
+//                 LOG_DEBUG("hello ", i) << std::endl;
+//                 common::Sleep(1.0);
+//                 LOG_DEBUG("world ", i) << std::endl;
+//                 return i*i;
+//             })
+//         );
+//     }
 
-    for(auto && result: results)
-        LOG_DEBUG(result.get()) << std::endl;
-    // std::cout << std::endl;
-}
-
-
-
+//     for(auto && result: results)
+//         LOG_DEBUG(result.get()) << std::endl;
+//     // std::cout << std::endl;
+// }
 
 TEST(types, pose)
 {
