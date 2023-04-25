@@ -111,9 +111,6 @@ void CallBack(uint id, std::string str)
 //     // std::cout << std::endl;
 // }
 
-
-
-
 TEST(types, pose)
 {
     types::Pose3D pose(Eigen::Vector3d(1, 2, 3), Eigen::Quaterniond(1, 2, 3, 4));
