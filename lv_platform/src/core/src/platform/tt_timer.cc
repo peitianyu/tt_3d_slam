@@ -28,4 +28,4 @@ bool Timer::IsTimeOut()
 }
 
 
-}
+} // namespace platform

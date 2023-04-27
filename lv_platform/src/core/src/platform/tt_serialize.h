@@ -12,10 +12,7 @@ class Serialize
 public:
     Serialize() : m_oss(std::ios::binary | std::ios::out) {}
 
-    void Reset()
-    {
-        m_oss.str("");
-    }
+    void Reset(){ m_oss.str("");}
 
     template <typename T>
     Serialize& operator<<(const T& t)
@@ -34,10 +31,8 @@ public:
         return *this;
     }
 
-    std::string str() const
-    {
-        return m_oss.str();
-    }
+    std::string str() const { return m_oss.str(); }
+
 private:
     std::ostringstream m_oss;
 };

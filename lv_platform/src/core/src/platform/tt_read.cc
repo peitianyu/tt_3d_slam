@@ -27,8 +27,6 @@ Reader::Reader(std::string topic, size_t max_size):rwlock_(topic), max_size_(max
     // 将共享内存对象映射到进程的虚拟地址空间
     shm_ptr_ = mmap(NULL, max_size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd_, 0);
     tt_assert(shm_ptr_ != MAP_FAILED);
-
-    rwlock_.ReadUnlock();
 }
 
 Reader::~Reader()

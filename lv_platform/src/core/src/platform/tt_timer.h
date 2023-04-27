@@ -6,7 +6,6 @@
 namespace platform
 {
 
-// 实现定时器中断
 class Timer 
 {
 public:

@@ -60,10 +60,9 @@ bool RunAllTests()
 	return true;
 }
 #else
-#define TEST(base, name) \
-	void base##name##_Test()
+#define TEST(base, name) void base##name##_Test()
 
-	bool RunAllTests() { return true; }
+bool RunAllTests() { return true; }
 #endif
 
 

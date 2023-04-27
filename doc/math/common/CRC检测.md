@@ -24,7 +24,7 @@ bool CheckCRC(const uint8_t* data, uint32_t size, uint16_t crc)
 }
 ```
 
-### 使用方法
+### 程序测试
 
 ```c++
 #include"common/tt_crc.h"

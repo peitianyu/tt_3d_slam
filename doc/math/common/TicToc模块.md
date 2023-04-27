@@ -29,7 +29,7 @@ private:
 };
 ```
 
-### 使用方法
+### 程序测试
 
 ```c++
 #include "common/tt_tic_toc.h"
