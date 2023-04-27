@@ -32,11 +32,10 @@ private:
 #define ASSERT_GT(a, b) Tester(__FILE__, __LINE__).Is((a) > (b), #a " > " #b)
 #define ASSERT_GE(a, b) Tester(__FILE__, __LINE__).Is((a) >= (b), #a " >= " #b)
 
+
 std::vector<void (*)()> tests;
 std::vector<std::string> test_names;
 
-#define RUN_ALL_TESTS
-#ifdef RUN_ALL_TESTS
 #define TEST(base, name)                              \
 	struct base##name##_Test                          \
 	{                                                 \
@@ -59,11 +58,7 @@ bool RunAllTests()
 	std::cout << "[ ALL TESTS PASSED SUCCESS ]" << std::endl;
 	return true;
 }
-#else
-#define TEST(base, name) void base##name##_Test()
 
-bool RunAllTests() { return true; }
-#endif
 
 
 

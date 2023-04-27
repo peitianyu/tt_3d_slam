@@ -79,6 +79,7 @@ TEST(all_test, counter)
     ASSERT_TRUE(counter.IsCountOut());
 }
 
+
 int main()
 {
     return RunAllTests();

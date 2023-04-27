@@ -1,5 +1,5 @@
 #include"tt_platform.h"
-
+#include"common/tt_sleep.h"
 
 namespace platform
 {
@@ -32,6 +32,8 @@ void Platform::Spin()
     while (true){
         for (auto &it : m_subscribers)
             static_cast<Subscriber *>(it.second.get())->Subscribe();
+        
+        common::Sleep(0.001);
     }
 }
 

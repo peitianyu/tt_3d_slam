@@ -15,10 +15,7 @@ Subscriber::Subscriber(std::string topic, size_t max_size, std::function<void(co
 void Subscriber::Subscribe()
 {
     if (timer_->IsTimeOut()){
-        std::string data;
-        reader_->Read(data);
-        callback_(data);
-        timer_->Reset();
+        SubscribeOnce();
     }
 }
 
