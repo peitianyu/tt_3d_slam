@@ -32,27 +32,58 @@ private:
 #define ASSERT_GT(a, b) Tester(__FILE__, __LINE__).Is((a) > (b), #a " > " #b)
 #define ASSERT_GE(a, b) Tester(__FILE__, __LINE__).Is((a) >= (b), #a " >= " #b)
 
+class RegisterTest
+{
+public:
+	static RegisterTest *GetInstance(){
+		static RegisterTest instance;
+		return &instance;
+	}
+
+	void Register(const std::string &name, void (*test)()){
+		if(!m_tests){ m_tests = new std::vector<ContextTest>();}
+		m_tests->push_back(ContextTest(name, test));
+	}
+
+	bool RunAllTests(){
+		std::cout << "[==========] Running " << m_tests->size() << " tests." << std::endl;
+		for(auto &test : *m_tests){
+			std::cout << "[ RUN      ] " << test.name << std::endl;
+			test.test();
+			std::cout << "[       OK ] " << test.name << std::endl;
+		}
+		std::cout << "[ ALL TESTS PASSED SUCCESS ]" << std::endl;
+		return true;
+	}
+private:
+	struct ContextTest{
+		std::string name;
+		void (*test)();
+		
+		ContextTest(const std::string &name, void (*test)()) : name(name), test(test) {}
+	};
+
+	std::vector<ContextTest> *m_tests;
+};
+
 #ifdef TEST_ENABLE
-#define TEST(base, name)                              \
-	struct base##name##_Test                          \
-	{                                                 \
-		base##name##_Test(){                          \
-			RegisterTest(#base "." #name, &Run);      \
-		}                                             \
-		static void Run();                            \
-	};                                                \
-	base##name##_Test g_##base##name##_Test;          \
+#define TEST(base, name)                              											\
+	struct base##name##_Test                          											\
+	{                                                 											\
+		base##name##_Test(){                          											\
+			RegisterTest::GetInstance()->Register(#base "." #name, &base##name##_Test::Run); 	\
+		}                                             											\
+		static void Run();                            											\
+	};                                                											\
+	base##name##_Test g_##base##name##_Test;          											\
 	void base##name##_Test::Run()
 
-void RegisterTest(const std::string &name, void (*test)());
+#define RunAllTests() RegisterTest::GetInstance()->RunAllTests()
 
 #else
-#define TEST(base, name) \
-	void base##name##_Test()
-	
+#define TEST(base, name) void base##name##_Test()
+#define RunAllTests() false
 #endif // TEST_ENABLE
-
-bool RunAllTests();
 
 
 #endif // __COMMON_TEST_H__

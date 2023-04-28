@@ -195,12 +195,12 @@ void TestSegmentFault()
 
 TEST(common, backtrace)
 {
-    REGISTER_SEGFAULT_HANDLER
-
     TestSegmentFault();
 }
 
 int main()
 {
+    REGISTER_SEGFAULT_HANDLER
+    
     return RunAllTests();
 }
