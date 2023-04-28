@@ -4,6 +4,9 @@ file(GLOB_RECURSE ALL_LIBRIRY_SRCS ${PROJECT_SOURCE_DIR}/src/core/viz/*.cc)
 include_directories(${PROJECT_SOURCE_DIR}/src/core
                     ${LV_MATH_INSTALL_DIR}/include/math)
 
+# 允许测试
+add_definitions(-DTEST_ENABLE)
+
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/install/test)
 
 # 测试模块

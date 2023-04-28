@@ -5,6 +5,9 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -DNDEBUG -Wall -std=c++14 -fPIC ")
 # 添加头文件
 INCLUDE_DIRECTORIES(../core/src)
 
+# 允许测试
+add_definitions(-DTEST_ENABLE)
+
 # 执行文件
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/install/test)
 

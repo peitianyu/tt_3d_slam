@@ -32,35 +32,27 @@ private:
 #define ASSERT_GT(a, b) Tester(__FILE__, __LINE__).Is((a) > (b), #a " > " #b)
 #define ASSERT_GE(a, b) Tester(__FILE__, __LINE__).Is((a) >= (b), #a " >= " #b)
 
-
-std::vector<void (*)()> tests;
-std::vector<std::string> test_names;
-
+#ifdef TEST_ENABLE
 #define TEST(base, name)                              \
 	struct base##name##_Test                          \
 	{                                                 \
 		base##name##_Test(){                          \
-			test_names.push_back(#base "." #name);    \
-			tests.push_back(&base##name##_Test::Run); \
+			RegisterTest(#base "." #name, &Run);      \
 		}                                             \
 		static void Run();                            \
 	};                                                \
 	base##name##_Test g_##base##name##_Test;          \
 	void base##name##_Test::Run()
 
-bool RunAllTests()
-{
-	for (uint i = 0; i < tests.size(); ++i)
-	{
-		std::cout << "[ RUN      ] " << test_names[i] << std::endl;
-		tests[i]();
-	}
-	std::cout << "[ ALL TESTS PASSED SUCCESS ]" << std::endl;
-	return true;
-}
+void RegisterTest(const std::string &name, void (*test)());
 
+#else
+#define TEST(base, name) \
+	void base##name##_Test()
+	
+#endif // TEST_ENABLE
 
-
+bool RunAllTests();
 
 
 #endif // __COMMON_TEST_H__

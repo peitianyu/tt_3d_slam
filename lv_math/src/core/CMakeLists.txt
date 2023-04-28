@@ -1,6 +1,9 @@
 file(GLOB_RECURSE ALL_LIBRIRY_HEDS "math/*.h*")
 file(GLOB_RECURSE ALL_LIBRIRY_SRCS "math/*.c*")
 
+# 允许测试
+add_definitions(-DTEST_ENABLE)
+
 # 添加头文件
 INCLUDE_DIRECTORIES(math)
 

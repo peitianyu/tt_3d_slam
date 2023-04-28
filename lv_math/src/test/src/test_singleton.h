@@ -3,6 +3,7 @@
 
 #include"common/tt_singleton.h"
 #include"common/tt_log.h"
+#include"common/tt_test.h"
 
 namespace test
 {
@@ -25,6 +26,12 @@ public:
     std::string m_str = "test_singleton";
 };
 
+
+TEST(common, singleton1)
+{
+    TestSingleton::GetInstance()->Print();
+    LOG_DEBUG(TestSingleton::GetInstance()->m_str) << std::endl;
+}
 
 }// namespace test
 
