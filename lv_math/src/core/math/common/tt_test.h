@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <sys/time.h>
 
 class Tester
 {
@@ -11,7 +12,7 @@ public:
 	~Tester(){ if(!m_ok) exit(1); }
 	Tester &Is(bool x, const std::string &msg = ""){
 		if (!x){
-			std::cout << "[      !OK ] " << m_name << ":" << m_line << " " << msg << std::endl;
+			std::cout << "\033[31m" << "[      !OK ] " << m_name << ":" << m_line << " " << msg << "\033[0m" << std::endl;
 			m_ok = false;
 		}
 		return *this;
@@ -46,13 +47,14 @@ public:
 	}
 
 	bool RunAllTests(){
-		std::cout << "[==========] Running " << m_tests->size() << " tests." << std::endl;
+		std::cout << "\033[32m" << "[==========] Running " << m_tests->size() << " tests." << "\033[0m" << std::endl;
 		for(auto &test : *m_tests){
-			std::cout << "[ RUN      ] " << test.name << std::endl;
+			std::cout << "\033[32m" << "[ RUN      ] " << test.name << "\033[0m" << std::endl;
+			uint start_time = GetTime();
 			test.test();
-			std::cout << "[       OK ] " << test.name << std::endl;
+			std::cout << "\033[32m" << "[      OK  ] " << test.name  << " (" << (GetTime() - start_time) << " ms)" << "\033[0m" << std::endl;
 		}
-		std::cout << "[ ALL TESTS PASSED SUCCESS ]" << std::endl;
+		std::cout << "\033[32m" << "[ ALL TESTS PASSED SUCCESS ]" << "\033[0m" << std::endl;
 		return true;
 	}
 private:
@@ -62,6 +64,13 @@ private:
 		
 		ContextTest(const std::string &name, void (*test)()) : name(name), test(test) {}
 	};
+
+	uint GetTime()
+	{
+		struct timeval time;
+		gettimeofday(&time, NULL);
+		return time.tv_sec * 1000 + time.tv_usec / 1000;
+	}
 
 	std::vector<ContextTest> *m_tests;
 };
