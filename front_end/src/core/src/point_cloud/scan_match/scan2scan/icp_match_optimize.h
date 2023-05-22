@@ -4,7 +4,7 @@
 
 #include "../scan_match_base.h"
 #include "3dr_party/nanoflann.hpp"
-#include "common/math.h"
+#include "common/tt_math.h"
 #include <Eigen/Dense>
 
 namespace front_end{
@@ -68,6 +68,7 @@ namespace point_cloud{
 
             Eigen::Matrix3d d_R = m_result.robot_pose.Rot().ToMatrix();
             uint good_point_cnt = 0;
+            float score = 0.0;
 
             Eigen::Matrix<double, 6, 6> H = Eigen::Matrix<double, 6, 6>::Zero();
             Eigen::Matrix<double, 6, 1> b = Eigen::Matrix<double, 6, 1>::Zero();
@@ -86,6 +87,7 @@ namespace point_cloud{
                 b += jacobian.transpose() * error;
 
                 ++good_point_cnt;
+                score += error.norm();
             }
 
             if (H.determinant() == 0)
@@ -94,7 +96,7 @@ namespace point_cloud{
             Eigen::Matrix<double, 6, 1> delta_x = -H.inverse() * b;
 
             m_result.error = delta_x.norm();
-            m_result.score = static_cast<double>(good_point_cnt) / world_ps.size();
+            m_result.score = score / good_point_cnt;
             m_result.robot_pose = m_result.robot_pose.TransformAdd(Pose3D(delta_x));
             m_result.is_converged = m_result.error < m_option.max_error;
 

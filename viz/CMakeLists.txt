@@ -12,6 +12,10 @@ find_package(PCL COMPONENTS visualization)
 include_directories(${PCL_INCLUDE_DIRS})
 link_directories(${PCL_LIBRARY_DIRS})
 
+find_package(OpenCV REQUIRED)
+include_directories(${OpenCV_INCLUDE_DIRS})
+link_directories(${OpenCV_LIBRARY_DIRS})
+
 set(LV_MATH_INSTALL_DIR ${PROJECT_SOURCE_DIR}/../lv_math/install)
 
 # 编译

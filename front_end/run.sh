@@ -1,0 +1,1 @@
+cd install/test && ./all_test && cd ../..

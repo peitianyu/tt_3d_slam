@@ -6,7 +6,7 @@ INCLUDE_DIRECTORIES(src ${LV_MATH_INSTALL_DIR}/include/math)
 
 # 添加动态库
 add_library(${PROJECT_NAME} SHARED ${ALL_LIBRIRY_SRCS})
-target_link_libraries(${PROJECT_NAME} ${LV_MATH_INSTALL_DIR}/lib/liblv_math.so ${PCL_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${LV_MATH_INSTALL_DIR}/lib/liblv_math.so ${PCL_LIBRARIES} ${OpenCV_LIBS})
 
 # 安装到本工程的lib文件夹下
 set(INSTALL_LIB ${PROJECT_SOURCE_DIR}/install/lib)

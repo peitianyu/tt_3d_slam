@@ -11,4 +11,4 @@ SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/install/test)
 
 # 测试模块
 add_executable(viz src/test_visual.cc ${ALL_LIBRIRY_SRCS})
-target_link_libraries(viz ${LV_MATH_INSTALL_DIR}/lib/liblv_math.so ${PCL_LIBRARIES})
+target_link_libraries(viz ${LV_MATH_INSTALL_DIR}/lib/liblv_math.so ${PCL_LIBRARIES} ${OpenCV_LIBS})
