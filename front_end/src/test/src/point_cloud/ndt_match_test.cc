@@ -29,12 +29,12 @@ void TestOnce(const std::vector<types::Point3D>& ref_ps, front_end::point_cloud:
         result_ps.push_back(result.robot_pose.TransformAdd(p));
     std::cout << "result_ps size: " << result_ps.size() << std::endl;
 
-    // // 可视化
-    // viz::Visual::GetInstance()->ShowPointCloud("ref", ref_ps, viz::COLOR_RED);
-    // viz::Visual::GetInstance()->ShowPointCloud("cur", ref_grid_points, viz::COLOR_BLUE);
-    // viz::Visual::GetInstance()->ShowPointCloud("result", result_ps, viz::COLOR_GREEN);
+    // 可视化
+    viz::Visual::GetInstance()->ShowPointCloud("ref", ref_ps, viz::COLOR_RED);
+    viz::Visual::GetInstance()->ShowPointCloud("cur", ref_grid_points, viz::COLOR_BLUE);
+    viz::Visual::GetInstance()->ShowPointCloud("result", result_ps, viz::COLOR_GREEN);
 
-    // viz::Visual::GetInstance()->Show();
+    viz::Visual::GetInstance()->Show();
 
     ASSERT_TRUE(result.is_converged);
 }
@@ -42,7 +42,7 @@ void TestOnce(const std::vector<types::Point3D>& ref_ps, front_end::point_cloud:
 JUST_RUN_TEST(ndt_match, test1)
 TEST(ndt_match, test1)
 {
-    front_end::point_cloud::NdtMatch::Option option(100, 1e-5, 2.0, 200, 2.0);
+    front_end::point_cloud::NdtMatch::Option option(100, 1e-5, 2.0, 200, 1.0);
     front_end::point_cloud::NdtMatch ndt_match(option);
 
     std::vector<types::Point3D> ref_ps = load_pcd("/mnt/d/file_ws/Learning/slam/tt_3d_slam/front_end/src/test/data/rabbit3.pcd");

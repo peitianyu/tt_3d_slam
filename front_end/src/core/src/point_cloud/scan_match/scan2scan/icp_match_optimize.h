@@ -95,10 +95,12 @@ namespace point_cloud{
 
             Eigen::Matrix<double, 6, 1> delta_x = -H.inverse() * b;
 
+            m_result.is_converged = std::fabs(delta_x.norm() - m_result.error) < m_option.max_error;
             m_result.error = delta_x.norm();
             m_result.score = score / good_point_cnt;
             m_result.robot_pose = m_result.robot_pose.TransformAdd(Pose3D(delta_x));
-            m_result.is_converged = m_result.error < m_option.max_error;
+
+            std::cout << "score: " << m_result.score << " error: " << m_result.error << " good_point_cnt: " << good_point_cnt << std::endl;
 
             return m_result.is_converged;
         }

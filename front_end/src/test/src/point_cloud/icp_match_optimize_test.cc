@@ -19,8 +19,8 @@ TEST(icp_match_optimize, test)
     icp_match_optimize.Match(ref_ps, cur_ps, types::Pose3D());
 
     front_end::point_cloud::ScanMatchResult result = icp_match_optimize.GetResult();
-    std::cout << "result: " << result.robot_pose << std::endl;
-    std::cout << "result: " << result.error << " score: " << result.score << std::endl;
+    std::cout << "result: " << result.robot_pose << " true_pose: " << cur_pose << std::endl;
+    std::cout << "result: " << result.error << " " << result.is_converged << " " << result.score << std::endl;
 
     std::vector<types::Point3D> result_ps;
     for (const auto &p : cur_ps)

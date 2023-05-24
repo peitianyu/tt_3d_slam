@@ -137,29 +137,12 @@ private:
             Eigen::Vector3d error = world_ps[i] - m_grid_cells[index].mean;
             Eigen::Matrix3d inv_cov = m_grid_cells[index].covarince.inverse();
 
-            Eigen::SelfAdjointEigenSolver<Eigen::Matrix3d> eig(inv_cov);
-            Eigen::Matrix3d sqrt_inv_cov = eig.operatorSqrt();
-
             Eigen::Matrix<double, 3, 6> jacobian = Eigen::Matrix<double, 3, 6>::Zero();
             jacobian.block<3, 3>(0, 0) = Eigen::Matrix3d::Identity();
             jacobian.block<3, 3>(0, 3) = -d_R * common::Hat(cur_ps[i]);
 
-            // H += jacobian.transpose() * jacobian;
-            // b += jacobian.transpose() * error;
-
             H += jacobian.transpose() * inv_cov * jacobian;
-            b += jacobian.transpose() * sqrt_inv_cov * error;
-
-            // if(i%100 == 0){
-            //     // std::cout << "error: " << error.transpose() << std::endl;
-            //     std::cout << "cov: \n" << m_grid_cells[index].covarince << std::endl;
-            //     // std::cout << "inv_cov: \n" << inv_cov << std::endl;
-            //     // std::cout << "sqrt_inv_cov: \n" << sqrt_inv_cov << std::endl;
-            //     // std::cout << "jacobian: \n" << jacobian << std::endl;
-            //     // std::cout << "H: \n" << H << std::endl;
-            //     // std::cout << "b: \n"
-            //     //           << b.transpose() << std::endl;
-            // }
+            b += jacobian.transpose() * inv_cov * error;
 
             ++good_point_cnt;
             score += error.norm();
@@ -170,18 +153,12 @@ private:
 
         Eigen::Matrix<double, 6, 1> delta_x = -H.inverse() * b;
 
-        // std::cout << "H: \n" << H << std::endl;
-        // std::cout << "b: \n" << b << std::endl;
-
-        // std::cout << "good_point_cnt: " << good_point_cnt << std::endl;
-
+        m_result.is_converged = std::fabs(delta_x.norm() - m_result.error) < m_option.max_error;
         m_result.error = delta_x.norm();
         m_result.score = score / good_point_cnt;
         m_result.robot_pose = m_result.robot_pose.TransformAdd(Pose3D(delta_x));
-        m_result.is_converged = m_result.error < m_option.max_error;
 
         std::cout << "score: " << m_result.score << " error: " << m_result.error << " good_point_cnt: " << good_point_cnt << std::endl;
-
 
         return m_result.is_converged;
     }
