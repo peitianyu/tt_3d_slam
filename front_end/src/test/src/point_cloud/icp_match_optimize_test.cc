@@ -1,31 +1,10 @@
 #include "common/tt_test.h"
 #include "point_cloud/scan_match/scan2scan/icp_match_optimize.h"
 #include "viz/tt_visual.h"
-
-#include <iostream>
-#include <fstream>
-#include <sstream>
-std::vector<types::Point3D> load_pcd(const std::string& file_name)
-{
-    std::vector<types::Point3D> points;
-    std::ifstream file(file_name);
-    std::string line;
-
-    while (std::getline(file, line)){ if (line == "DATA ascii") break;}
-
-    while(std::getline(file, line)){
-        std::stringstream ss(line);
-        double x, y, z;
-        ss >> x >> y >> z;
-        points.emplace_back(x, y, z);
-    }
-
-    ASSERT_EQ(points.size(), 3056);
-    return points;
-}
+#include "load_pcd.h"
 
 
-JUST_RUN_TEST(icp_match_optimize, test)
+// JUST_RUN_TEST(icp_match_optimize, test)
 TEST(icp_match_optimize, test)
 {
     front_end::point_cloud::IcpMatchOptimize::Option option(100, 1e-5, 2.0);
