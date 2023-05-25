@@ -39,7 +39,7 @@ void TestOnce(const std::vector<types::Point3D>& ref_ps, front_end::point_cloud:
     ASSERT_TRUE(result.is_converged);
 }
 
-JUST_RUN_TEST(ndt_match, test1)
+// JUST_RUN_TEST(ndt_match, test1)
 TEST(ndt_match, test1)
 {
     front_end::point_cloud::NdtMatch::Option option(100, 1e-5, 2.0, 200, 1.0);

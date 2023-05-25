@@ -4,7 +4,7 @@
 #include "load_pcd.h"
 
 
-// JUST_RUN_TEST(icp_match_optimize, test)
+JUST_RUN_TEST(icp_match_optimize, test)
 TEST(icp_match_optimize, test)
 {
     front_end::point_cloud::IcpMatchOptimize::Option option(100, 1e-5, 2.0);
