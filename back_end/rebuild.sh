@@ -3,7 +3,7 @@ if [ ! -d "build" ]; then
     mkdir build
 fi
 
-cd build && cmake .. -DCOMPILE_MODE=TEST && make -j6
+cd build && cmake .. && make -j6
 
 cd ..
 

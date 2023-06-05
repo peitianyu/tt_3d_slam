@@ -2,8 +2,6 @@ file(GLOB_RECURSE ALL_LIBRIRY_SRCS "../core/*.c*")
 file(GLOB_RECURSE ALL_LIBRIRY_TESTS "src/*.c*")
 file(GLOB_RECURSE ALL_LIBRIRY_HEADERS "../core/*.h")
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -DNDEBUG -Wall -std=c++14 -fPIC ")
-
 # 添加头文件
 INCLUDE_DIRECTORIES(../core/src)
 
@@ -18,6 +16,7 @@ target_link_libraries(all_test ${LV_MATH_INSTALL_DIR}/lib/liblv_math.so
                                 ${LV_VIZ_INSTALL_DIR}/lib/libviz.so 
                                 ${PCL_LIBRARIES}
                                 ${OpenCV_LIBS}
-                                ${LV_PLATFORM_INSTALL_DIR}/lib/libplatform.so)
+                                ${LV_PLATFORM_INSTALL_DIR}/lib/libplatform.so
+                                ${LV_FRONT_END_INSTALL_DIR}/lib/libfront_end.so)
 
 

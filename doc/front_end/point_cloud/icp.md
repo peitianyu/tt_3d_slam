@@ -61,7 +61,7 @@
     front_end::point_cloud::IcpMatchOptimize::Option option(100, 1e-5, 2.0);
     front_end::point_cloud::IcpMatchOptimize icp_match_optimize(option);
 
-    std::vector<types::Point3D> ref_ps = load_pcd("/mnt/d/file_ws/Learning/slam/tt_3d_slam/front_end/src/test/data/rabbit3.pcd");
+    std::vector<types::Point3D> ref_ps = load_pcd("../../src/test/data/rabbit3.pcd");
   
     types::Pose3D cur_pose(types::Point3D(0.1, 0.1, 0.1), types::Rot3D(0.1, 0.1, 0.1));
     std::vector<types::Point3D> cur_ps;
