@@ -170,3 +170,9 @@ double GraphOptimize::ComputeErrorNormSquared(const FactorGraph &graph)
         error += factor->Error().squaredNorm();
     return error;
 }
+
+
+void GraphOptimize::Marginalize(FactorGraph *graph, SparsityPattern *pattern, int marg_id)
+{
+    
+}

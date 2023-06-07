@@ -1,7 +1,7 @@
 #include "common/tt_test.h"
 #include "common/tt_log.h"
-#include "filter/simulation/read_data.h"
-#include "filter/simulation/sensor_interface.h"
+#include "simulation/read_data.h"
+#include "simulation/sensor_interface.h"
 #include "filter/imu_gps_fuse/imu_gps_localizer.h"
 #include <fstream>
 
@@ -46,8 +46,7 @@ std::unique_ptr<ImuGpsLocalizer> ImuGpsFuse::imu_gps_localizer_ =
 
 
 
-
-// JUST_RUN_TEST(imu_gps_location, test) 
+JUST_RUN_TEST(imu_gps_location, test) 
 TEST(imu_gps_location, test) 
 {
     std::string data_path = "../../src/test/data/imu_gps_data.txt";
