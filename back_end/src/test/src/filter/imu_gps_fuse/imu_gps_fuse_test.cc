@@ -46,7 +46,7 @@ std::unique_ptr<ImuGpsLocalizer> ImuGpsFuse::imu_gps_localizer_ =
 
 
 
-JUST_RUN_TEST(imu_gps_location, test) 
+// JUST_RUN_TEST(imu_gps_location, test) 
 TEST(imu_gps_location, test) 
 {
     std::string data_path = "../../src/test/data/imu_gps_data.txt";

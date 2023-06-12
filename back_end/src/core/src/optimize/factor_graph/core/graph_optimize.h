@@ -2,10 +2,9 @@
 #define __GRAPH_OPTIMIZE_H__
 
 #include <iostream>
-#include <map>
-#include <Eigen/Sparse>
-
+#include<map>
 #include "factor_graph.h"
+#include <Eigen/Sparse>
 #include "utils.h"
 #include "sparsity_pattern.h"
 
@@ -31,9 +30,6 @@ private:
     bool ContinueIteratingCheck(int iter_num, double current_error, double new_error, bool *converged);
 
     double ComputeErrorNormSquared(const FactorGraph &graph);
-
-    // 基于Schur补实现边缘化
-    void Marginalize(FactorGraph *graph, SparsityPattern *pattern, int marg_id);
 private:
     Option m_option;
     SparsityPatternBuilder  m_sparsity_pattern_builder;
