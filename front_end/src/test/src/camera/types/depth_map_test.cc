@@ -39,7 +39,6 @@ TEST(depth_map, test)
     }
     fin.close();
 
-
     // 生成点云
     front_end::point_cloud::PointCloudXYZ point_cloud;
     for(uint i = 0; i < depth_maps.size(); i++) {
