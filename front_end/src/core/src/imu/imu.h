@@ -1,21 +1,14 @@
 #ifndef __IMU_H__
 #define __IMU_H__
 
-#include <Eigen/Core>
-#include <memory>
-
-#include "types/time.h"
+// #include 
 
 namespace front_end{
+namespace camera{
 
-struct Imu
-{
-    types::Time time_stamp;
 
-    Eigen::Vector3d acc;
-    Eigen::Vector3d gyro;
-};
 
+} // namespace camera
 } // namespace front_end
 
 #endif // __IMU_H__
