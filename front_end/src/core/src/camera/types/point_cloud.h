@@ -21,7 +21,7 @@ public:
 
     void AddPoints(const std::vector<PointType>& ps) { m_point_cloud.insert(m_point_cloud.end(), ps.begin(), ps.end());}
 
-    std::vector<PointType> GetPointCloud() const { return m_point_cloud;}
+    const std::vector<PointType>& GetPointCloud() const { return m_point_cloud;}
 
     void Clear() { m_point_cloud.clear(); }
 private:
@@ -37,8 +37,8 @@ struct RgbPoint3D
         : pos(p), rgb(c) {}
 };
 
-using PointCloud3D = PointCloud<types::Point3D>;
 using PointCloudRGB = PointCloud<RgbPoint3D>;
+using PointCloudXYZ = PointCloud<Eigen::Vector3d>;
        
 } // namespace camera
 } // namespace front_end

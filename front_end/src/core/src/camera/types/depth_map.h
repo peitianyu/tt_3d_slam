@@ -4,6 +4,7 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include "point_cloud.h"
+#include "types/pose3d.h"
 
 namespace front_end{
 namespace point_cloud{
@@ -29,7 +30,13 @@ public:
         if(!depth_map_path.empty())
             m_depth_map = cv::imread(depth_map_path, -1);
         if(!color_img_path.empty())
-            m_color_img = cv::imread(color_img_path, -1);
+            m_color_img = cv::imread(color_img_path);
+
+        if(m_depth_map.empty() || m_color_img.empty())
+        {
+            std::cout << "depth map or color image is empty!" << std::endl;
+            exit(0);
+        }
     }
 
     DepthMap(const Param& param, const cv::Mat& depth_map, const cv::Mat& color_img)
@@ -59,7 +66,7 @@ public:
         }
     }
 
-    PointCloudRGB GeneratePointCloud()
+    PointCloudRGB GeneratePointCloudRGB(types::Pose3D pose)
     {
         PointCloudRGB pc;
         for(int m = 0; m < m_depth_map.rows; m++)
@@ -77,7 +84,27 @@ public:
                 uint8_t g = m_color_img.ptr<uchar>(m)[n * 3 + 1];
                 uint8_t r = m_color_img.ptr<uchar>(m)[n * 3 + 2];
 
-                pc.AddPoint(RgbPoint3D(Eigen::Vector3d(x, y, z), Eigen::Vector3i(r, g, b)));
+                pc.AddPoint(RgbPoint3D(pose.TransformAdd(Eigen::Vector3d(x, y, z)), Eigen::Vector3i(r, g, b)));
+            }
+        }
+        return pc;
+    }
+
+    PointCloudXYZ GeneratePointCloudXYZ(types::Pose3D pose)
+    {
+        PointCloudXYZ pc;
+        for(int m = 0; m < m_depth_map.rows; m++)
+        {
+            for(int n = 0; n < m_depth_map.cols; n++)
+            {
+                ushort d = m_depth_map.ptr<ushort>(m)[n];
+                if(d == 0) continue; // 为0表示没有测量到
+                    
+                double x = (n - m_param.cx) / m_param.fx * d / m_param.depth_scale;
+                double y = (m - m_param.cy) / m_param.fy * d / m_param.depth_scale;
+                double z = d / m_param.depth_scale;
+
+                pc.AddPoint(pose.TransformAdd(Eigen::Vector3d(x, y, z)));
             }
         }
         return pc;

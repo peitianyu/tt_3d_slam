@@ -1,7 +1,7 @@
 #include "common/tt_test.h"
 #include "gps/gps_convertor.h"
 
-JUST_RUN_TEST(gps_convertor, test) 
+// JUST_RUN_TEST(gps_convertor, test) 
 TEST(gps_convertor, test) 
 {
     front_end::GpsConverter gps_converter(Eigen::Vector3d(39.984, 116.306, 1110));
