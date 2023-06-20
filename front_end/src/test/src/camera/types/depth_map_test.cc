@@ -5,21 +5,21 @@
 #include <sstream>
 #include <iostream>
 
-JUST_RUN_TEST(depth_map, test) 
+// JUST_RUN_TEST(depth_map, test) 
 TEST(depth_map, test) 
 {
     // std::cout << "depth_map test" << std::endl;
 
-    std::vector<front_end::point_cloud::DepthMap> depth_maps;
+    std::vector<front_end::camera::DepthMap> depth_maps;
     std::vector<types::Pose3D> poses;
 
     // 读取深度图
-    front_end::point_cloud::DepthMap::Param param;
+    front_end::camera::DepthMap::Param param;
     std::string img_path = "../../src/test/data/depth/";
     for(int i = 1; i < 6; i++) {
         std::string color_path = img_path + "color/" + std::to_string(i) + ".png";
         std::string depth_path = img_path + "depth/" + std::to_string(i) + ".pgm";
-        depth_maps.push_back(front_end::point_cloud::DepthMap(param, color_path, depth_path));
+        depth_maps.push_back(front_end::camera::DepthMap(param, color_path, depth_path));
     }
 
     // 读取相机位姿
@@ -40,7 +40,7 @@ TEST(depth_map, test)
     fin.close();
 
     // 生成点云
-    front_end::point_cloud::PointCloudXYZ point_cloud;
+    front_end::camera::PointCloudXYZ point_cloud;
     for(uint i = 0; i < depth_maps.size(); i++) {
         std::vector<Eigen::Vector3d> pc = depth_maps[i].GeneratePointCloudXYZ(poses[i]).GetPointCloud();
         point_cloud.AddPoints(pc);

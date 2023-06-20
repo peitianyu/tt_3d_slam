@@ -7,7 +7,7 @@
 #include <vector>
 
 namespace front_end{
-namespace point_cloud{
+namespace camera{
 
 template<class PointType>
 class PointCloud

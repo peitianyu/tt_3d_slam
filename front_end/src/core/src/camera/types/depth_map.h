@@ -7,7 +7,7 @@
 #include "types/pose3d.h"
 
 namespace front_end{
-namespace point_cloud{
+namespace camera{
 
 class DepthMap
 {
