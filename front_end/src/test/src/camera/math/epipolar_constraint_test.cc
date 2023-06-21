@@ -5,7 +5,7 @@
 #include <sstream>
 #include <iostream>
 
-JUST_RUN_TEST(epipolar_constraint, test) 
+// JUST_RUN_TEST(epipolar_constraint, test) 
 TEST(epipolar_constraint, test) 
 {
     std::string img_path = "../../src/test/data/feature/";
